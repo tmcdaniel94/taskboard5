@@ -22,9 +22,34 @@
   </header>
   <div class="container">
     <div class="text-center mb-5">
-      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
+      <button id="addTaskBtn" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
     </div>
     <!-- Todo: Create a modal with a form to add tasks -->
+
+    <!-- Create modal dialog box when "Add Task" is clicked -->
+    <div>
+      <dialog id="formModal">
+      <form method="dialog">
+          <label for="taskTitle">Task Title</label>
+          <input type="text" id="taskTitle">
+          <label for="taskDate">Task Due Date</label>
+          <!-- insert calender -->
+           <div id="taskDate">
+            <input
+                  type="text"
+                  class="form-control"
+                  id="datepicker"
+                  autocomplete="off"
+            />
+           </div>
+          <br>
+          <label for="taskDesc" >Task Description</label>
+          <textarea id="taskDesc"></textarea>
+          <button type="submit">Add Task</button> 
+      </form>
+      </dialog>
+    </div>
+
     <div class="row swim-lanes text-center justify-content-between">
       <div class="col-12 col-lg-4 d-flex">
         <div id="to-do" class="card border-light mb-3 lane flex-grow-1">
