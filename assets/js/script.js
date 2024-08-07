@@ -70,37 +70,32 @@ function renderTaskList() {
     $('#todo-cards').empty();
     $('#in-progress-cards').empty();
     $('#done-cards').empty();
-    
-// use the taskList variable
-// Loop through the taskList var and append it to the corresponding status div
-for (var i = 0; i < taskList.length; i++) {
-    // todo, in-progress, done
-    if (taskList[i].status === 'todo') {
-        document.getElementById('todo-cards').append(createTaskCard(taskList[i]))
-    }
-    // write a conditional to handle in-progress and done cards
-    else if (taskList[i].status === 'in-progress') {
-        document.getElementById('in-progress-cards').append(createTaskCard(taskList[i]))
-    }
-    else if (taskList[i].status === 'done') {
-        document.getElementById('done-cards').append(createTaskCard(taskList[i]))
-    }
 
-    // draggable functionality goes in this function (refer to mini-project)
-  $('.draggable').draggable({
-    opacity: 0.7,
-    zIndex: 100,
-    // This is the function that creates the clone of the card that is dragged. This is purely visual and does not affect the data.
-    helper: function (e) {
-    // ? Check if the target of the drag event is the card itself or a child element. If it is the card itself, clone it, otherwise find the parent card  that is draggable and clone that.
-    //   const original = $(e.target).card('ui-draggable')
-      // ? Return the clone with the width set to the width of the original card. This is so the clone does not take up the entire width of the lane. This is to also fix a visual bug where the card shrinks as it's dragged to the right.
-      return $(this).clone().css({
-        width: $(this).outerWidth(),
-      });
-    },
-  });
-}
+    // use the taskList variable
+    // Loop through the taskList var and append it to the corresponding status div
+    for (var i = 0; i < taskList.length; i++) {
+
+        if (taskList[i].status === 'todo') {
+            document.getElementById('todo-cards').append(createTaskCard(taskList[i]))
+        }
+        else if (taskList[i].status === 'in-progress') {
+            document.getElementById('in-progress-cards').append(createTaskCard(taskList[i]))
+        }
+        else if (taskList[i].status === 'done') {
+            document.getElementById('done-cards').append(createTaskCard(taskList[i]))
+        }
+
+        $('.draggable').draggable({
+            opacity: 0.7,
+            zIndex: 100,
+            // This is the function that creates the clone of the card that is dragged. This is purely visual and does not affect the data.
+            helper: function (e) {
+                return $(this).clone().css({
+                    width: $(this).outerWidth(),
+                });
+            },
+        });
+    }
 }
 
 // Todo: create a function to handle adding a new task
@@ -150,27 +145,27 @@ function handleDeleteTask(event) {
         // Rerender the task list
         renderTaskList();
     }
-
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
     //  Read tasks from localStorage
-  const tasks = taskList;
-  // Get the project id from the event
-  const taskId = ui.draggable.data('taskId');
-  // Get the id of the lane that the card was dropped into
-  const newStatus = event.target.id;
+    const tasks = taskList;
+    // Get the project id from the event
+    const taskId = ui.draggable.data('taskId');
+    // Get the id of the lane that the card was dropped into
+    const newStatus = event.target.id;
 
-  for (let task of tasks) {
-    // ? Find the project card by the `id` and update the project status.
-    if (task.id === taskId) {
-      task.status = newStatus;
-    }}
+    for (let task of tasks) {
+        // ? Find the project card by the `id` and update the project status.
+        if (task.id === taskId) {
+            task.status = newStatus;
+        }
+    }
 
-  // ? Save the updated projects array to localStorage (overwritting the previous one) and render the new project data to the screen.
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-  renderTaskList();
+    // Save the updated projects array to localStorage (overwritting the previous one) and render the new project data to the screen.
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    renderTaskList();
 
 }
 
